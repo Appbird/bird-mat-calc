@@ -1,9 +1,13 @@
 [package]
-name = "mat-calc"
+authors = ["Appbird"]
+description = "The simple matrix calculator, treating rational numbers.\nThis application receive a matrix from stdin, and the result is printed on stdout.\nTo finish entering one matrix, enter an empty line."
+name = "bird-mat-calc"
 version = "0.1.0"
 edition = "2021"
 
+
 [dependencies]
 clap = { version = "4.4.8", features = ["derive"] }
+env_logger = "0.10.1"
 fraction = "0.14.0"
 log = "0.4.20"

@@ -1,4 +1,4 @@
-extern crate mat_calc;
+extern crate bird_mat_calc;
 use mat_calc::matrix::Matrix;
 
 #[test]

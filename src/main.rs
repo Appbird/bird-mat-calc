@@ -14,7 +14,7 @@ enum Commands {
 }
 
 #[derive(Parser)]
-#[command(author, version, about, long_about = None)]
+#[command(author, version, about, long_about)]
 struct CLI {
     #[command(subcommand)]
     /// 空白区切りで入力を行い、改行を行えば次の列へ入力される。
@@ -22,7 +22,7 @@ struct CLI {
     command: Commands
 }
 fn eprint_guide() {
-    eprintln!("To finish entering one matrix, enter empty line.");
+    eprintln!("To finish entering one matrix, enter an empty line.");
 }
 
 fn mul() {
@@ -49,6 +49,7 @@ fn inverse() {
 }
 
 fn main() {
+    env_logger::init();
     let cli = CLI::parse();
     eprint_guide();
     match  &cli.command {

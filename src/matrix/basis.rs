@@ -1,7 +1,8 @@
-use std::str::FromStr;
+use std::{str::FromStr, process::exit};
 use fraction::Fraction;
+use log::error;
 
-pub type MatrixArray = Vec::<Vec::<Fraction>>;
+type MatrixArray = Vec::<Vec::<Fraction>>;
 #[derive(Clone, PartialEq, Debug)]
 pub struct Matrix{
     pub mat: MatrixArray,
@@ -29,6 +30,7 @@ impl Matrix {
         return Matrix::as_matrix(matrix);
     }
     /// 文字列の二次元配列から、Fractionからなる行列を生成する。
+    #[allow(dead_code)] 
     pub fn from_vector_of_str(array:Vec<Vec<&str>>) -> Matrix {
         Matrix::as_matrix(array.iter().map(
             |v| v.iter().map(
@@ -51,7 +53,10 @@ impl Matrix {
     }
     /// 行方向に見て、後方にある正方行列を取り出し、新たな正方行列を得る。
     pub fn pop_identity(&self) -> Matrix {
-        assert!(self.row() < self.col());
+        if self.row() >= self.col() {
+            error!("On the given matrix, the row-count is bigger than col-count.");
+            exit(1);
+        }
         let mut matrix = Matrix::zero(self.row(), self.row());
         for r in 0..matrix.row() {
             for c in 0..matrix.col() {
@@ -73,7 +78,10 @@ impl Matrix {
     pub fn as_matrix(mat : Vec::<Vec::<Fraction>>) -> Self{
         assert!(mat.len() > 0);
         for row in mat.iter().skip(1) {
-            assert_eq!(row.len(), mat[0].len());
+            if row.len() != mat[0].len() {
+                error!("The given matrix doesn't have same height.");
+                exit(1);
+            }
         }
         let row = mat.len();
         let col = mat[0].len();
