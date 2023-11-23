@@ -2,9 +2,26 @@
     以下の問いに答え、計画書を完成させよ。
     あまり悩まないで、今自分の頭に「明確に」あることだけを書こう。
 -->
+# bird-mat-calc
+
+トレース可能で有理数を扱える、CLIで動作する単純な行列計算機。
+
+The simple matrix calculator on CLI, traceable,  treating rational numbers.
+
 このアプリケーションは私がRustの練習するために作られた個人用のアプリケーションです。
 
 I created this application to practice Rust.
+
+# installation
+
+- 次の方法によりソースファイルをダウンロードして下さい。
+  - `git clone`を行う
+  - このページの上部にある`<> Code`を選択し、そこから"Download ZIP"を選択する。
+- その後、Rustの`cargo`を用いてビルドして下さい。
+  - Cargoがダウンロードされていなければ、以下のドキュメントをもとにダウンロードすると良いでしょう。
+    - https://doc.rust-jp.rs/book-ja/ch01-01-installation.html#%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB
+    - https://www.rust-lang.org/ja/tools/install
+  - ダウンロードしたフォルダのディレクトリで`cargo build --release`を走らせると、`./target/release`内に`bird-mat-calc`というバイナリファイルができているはずです。
 
 # How to use
 
@@ -24,6 +41,73 @@ Usage: bird-mat-calc [OPTIONS] <COMMAND>
 - `sweep`: 掃き出し法によって逆行列を求めます。**正則でない行列に対してはエラーを返します。**
 - `help`: ヘルプを表示します。
 
+
+# 動作の様子
+
+## 逆行列の掃き出し法によるトレース付き計算
+```
+> bird-mat-calc -v inverse
+To finish entering one matrix, enter an empty line.
+Enter A >>
+3 1 2
+-1 2 5
+1 5 1/5
+
+->
+    1   1/3   2/3   1/3     0     0
+   -0   7/3  17/3   1/3     1     0
+    0  14/3 -7/15  -1/3     0     1
+
+->
+    1     0  -1/7   2/7  -1/7     0
+   -0     1  17/7   1/7   3/7     0
+    0     0 -59/5    -1    -2     1
+
+->
+    1     0    -0 123/413 -7/59 -5/413
+   -0     1     0 -26/413  1/59 85/413
+    0     0     1  5/59 10/59 -5/59
+
+123/413 -7/59 -5/413
+-26/413  1/59 85/413
+ 5/59 10/59 -5/59
+```
+## 行列の積
+```
+> bird-mat-calc mul
+To finish entering one matrix, enter an empty line.
+Enter A >>
+3 1 2
+-1 2 5
+1 5 1/5
+
+Enter B (its row should be 3.) >>
+123/413 -7/59 -5/413
+-26/413  1/59 85/413
+ 5/59 10/59 -5/59
+
+    1     0     0
+    0     1     0
+    0     0     1
+```
+
+```
+> bird-mat-calc mul
+To finish entering one matrix, enter an empty line.
+Enter A >>
+123/413 -7/59 -5/413
+-26/413  1/59 85/413
+ 5/59 10/59 -5/59
+
+Enter B (its row should be 3.) >>
+3 1 2
+-1 2 5
+1 5 1/5
+
+    1     0     0
+    0     1     0
+    0     0     1
+```
 
 # 0.要約 -- abstract
 
