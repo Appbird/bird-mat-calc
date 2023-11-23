@@ -1,5 +1,5 @@
 extern crate bird_mat_calc;
-use mat_calc::matrix::Matrix;
+use bird_mat_calc::matrix::Matrix;
 
 #[test]
 fn test_pushed_identity() {

@@ -1,6 +1,6 @@
 mod matrix;
 use clap::{Parser, Subcommand};
-use crate::matrix::Matrix;
+use crate::matrix::{Matrix, calc::Regularity};
 
 #[derive(Subcommand)]
 enum Commands {
@@ -39,13 +39,14 @@ fn mul() {
 fn sweep(verbose:bool) {
     eprintln!("Enter A >>");
     let a = Matrix::read_matrix();
-
-    println!("{}", a.sweeped_verbose(verbose));
+    match a.sweeped_verbose(verbose) {
+        Regularity::Regular(mat) => print!("{}", mat),
+        Regularity::Sigular(mat) => print!("{}", mat),
+    }
 }
 fn inverse(verbose:bool) {
     eprintln!("Enter A >>");
     let a = Matrix::read_matrix();
-
     println!("{}", a.inversed_verbose(verbose));
 }
 
