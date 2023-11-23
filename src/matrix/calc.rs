@@ -21,7 +21,12 @@ impl Matrix {
         return c;
     }
     /// 掃き出し法によって行列を掃き出す。
+    #[allow(dead_code)]
     pub fn sweeped(&self) -> Matrix {
+        self.sweeped_verbose(false)
+    }
+    /// 掃き出し法によって行列を掃き出す。途中結果も出力する。
+    pub fn sweeped_verbose(&self, verbose:bool) -> Matrix {
         let mut sweeped = self.clone();
         for r in 0..min(self.row(), self.col()) {
             // アンカーが0になることを防ぐべく、0でない行列を探す。
@@ -47,13 +52,23 @@ impl Matrix {
                     sweeped.mat[k][l] = sweeped.mat[k][l] - sweeped.mat[r][l] * current_top;
                 }
             }
+            if verbose { println!("->\n{}", sweeped); }
         }
         return sweeped;
     }
     /// 掃き出し法によって逆行列を求める。
+    #[allow(dead_code)]
     pub fn inversed(&self) -> Matrix{
+        self.inversed_verbose(false)
+    }
+    /// 掃き出し法によって逆行列を求める。
+    pub fn inversed_verbose(&self, verbose:bool) -> Matrix{
+        if self.col() != self.row() {
+            error!("A's row count is {}, but B's column count is {}, so these product can't be defined.", self.col(), rhs.row() );
+            exit(1);
+        }
         return self.push_back_identity()
-            .sweeped()
+            .sweeped_verbose(verbose)
             .pop_identity();
     }
 }
@@ -62,7 +77,7 @@ impl std::fmt::Display for Matrix {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for row in &self.mat {
             for cell in row {
-                write!(f, "{} ", cell).unwrap();
+                write!(f, "{}\t", cell).unwrap();
             }
             writeln!(f).unwrap();
         }

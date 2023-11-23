@@ -9,8 +9,7 @@ enum Commands {
     /// Sweeping one given matrix through stdin.
     Sweep,
     /// inverse one given matrix through stdin.
-    Inverse,
-
+    Inverse
 }
 
 #[derive(Parser)]
@@ -19,7 +18,10 @@ struct CLI {
     #[command(subcommand)]
     /// 空白区切りで入力を行い、改行を行えば次の列へ入力される。
     /// 空行を含めば、次の行列へ入力が移る。
-    command: Commands
+    command: Commands,
+    #[arg(short, long)]
+    /// 掃き出し法において、計算途中の結果をstdoutに出力します。
+    verbose: bool,
 }
 fn eprint_guide() {
     eprintln!("To finish entering one matrix, enter an empty line.");
@@ -34,18 +36,17 @@ fn mul() {
 
     println!("{}", a.mul(&b));
 }
-fn sweep() {
+fn sweep(verbose:bool) {
     eprintln!("Enter A >>");
     let a = Matrix::read_matrix();
 
-    println!("{}", a.sweeped());
+    println!("{}", a.sweeped_verbose(verbose));
 }
-fn inverse() {
-    eprintln!("inverse A. Finish entering a matrix by enter empty line.");
+fn inverse(verbose:bool) {
     eprintln!("Enter A >>");
     let a = Matrix::read_matrix();
 
-    println!("{}", a.inversed());
+    println!("{}", a.inversed_verbose(verbose));
 }
 
 fn main() {
@@ -54,8 +55,8 @@ fn main() {
     eprint_guide();
     match  &cli.command {
         Commands::Mul => mul(),
-        Commands::Sweep => sweep(),
-        Commands::Inverse => inverse(),
+        Commands::Sweep => sweep(cli.verbose),
+        Commands::Inverse => inverse(cli.verbose),
     }
     
 }
