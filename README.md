@@ -4,7 +4,7 @@
 -->
 # bird-mat-calc
 
-トレース可能で有理数を扱える、CLIで動作する単純な行列計算機。
+計算過程を追いかけることができて、有理数を扱える、CLIで動作する単純な行列計算機。
 
 The simple matrix calculator on CLI, traceable,  treating rational numbers.
 
