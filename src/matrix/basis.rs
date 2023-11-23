@@ -14,6 +14,7 @@ impl Matrix {
     /// 標準入力から行列を読み取る。もし1行空行が挟まれば、その地点で読み取りを終了する。
     /// 
     /// #TODO: これを一般的なストリームに拡張したい...。BufReadだとstd::io::stdin()と互換性なし。どうすればいいんだ！？
+    /// #TODO: LaTeXの行列が直接入れられても対応できるようにする。
     pub fn read_matrix() -> Matrix {
         let mut matrix = MatrixArray::new();
         loop {
