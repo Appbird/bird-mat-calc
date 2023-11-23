@@ -1,6 +1,6 @@
 mod matrix;
-use matrix::Matrix;
 use clap::{Parser, Subcommand};
+use crate::matrix::Matrix;
 
 #[derive(Subcommand)]
 enum Commands {
